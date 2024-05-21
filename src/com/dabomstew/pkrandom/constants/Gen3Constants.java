@@ -170,7 +170,7 @@ public class Gen3Constants {
 
     public static final int evolutionMethodCount = 15;
 
-    public static final int cacophonyIndex = 76, airLockIndex = 77, highestAbilityIndex = 77;
+    public static final int airLockIndex = 77, highestAbilityIndex = 77;
 
     public static final int emMeteorFallsStevenIndex = 804;
 
@@ -187,7 +187,7 @@ public class Gen3Constants {
         return map;
     }
 
-    public static final List<Integer> uselessAbilities = Arrays.asList(Abilities.forecast, Gen3Constants.cacophonyIndex);
+    public static final List<Integer> uselessAbilities = Arrays.asList(Abilities.forecast, Abilities.stanceChange);
 
     public static final int frlgMapLabelsStart = 0x58;
 
@@ -400,6 +400,7 @@ public class Gen3Constants {
         map.put(Type.ROCK, Arrays.asList(Gen3Items.hardStone));
         map.put(Type.STEEL, Arrays.asList(Gen3Items.metalCoat));
         map.put(Type.WATER, Arrays.asList(Gen3Items.mysticWater, Gen3Items.seaIncense));
+        map.put(Type.FAIRY, Arrays.asList(Gen3Items.oddIncense));
         map.put(null, Collections.emptyList()); // ??? type
         return Collections.unmodifiableMap(map);
     }
@@ -439,6 +440,7 @@ public class Gen3Constants {
         table[0x0F] = Type.ICE;
         table[0x10] = Type.DRAGON;
         table[0x11] = Type.DARK;
+        table[0x12] = Type.FAIRY;
         return table;
     }
 
@@ -481,6 +483,8 @@ public class Gen3Constants {
             return 0x08;
         case DARK:
             return 0x11;
+        case FAIRY:
+            return 0x12;
         default:
             return 0; // normal by default
         }
@@ -509,14 +513,11 @@ public class Gen3Constants {
         allowedItems.banRange(Gen3Items.machBike, 30);
         allowedItems.banRange(Gen3Items.oaksParcel, 28);
         // Unknown blank items
-        allowedItems.banRange(Gen3Items.unknown52, 11);
-        allowedItems.banRange(Gen3Items.unknown87, 6);
-        allowedItems.banRange(Gen3Items.unknown99, 4);
+        allowedItems.banRange(Gen3Items.unknown87, 4);
         allowedItems.banRange(Gen3Items.unknown112, 9);
         allowedItems.banRange(Gen3Items.unknown176, 3);
-        allowedItems.banRange(Gen3Items.unknown226, 28);
         allowedItems.banRange(Gen3Items.unknown347, 2);
-        allowedItems.banSingles(Gen3Items.unknown72, Gen3Items.unknown82, Gen3Items.unknown105, Gen3Items.unknown267);
+        allowedItems.banSingles(Gen3Items.unknown61, Gen3Items.unknown82, Gen3Items.unknown105, Gen3Items.unknown267);
         // HMs
         allowedItems.banRange(Gen3Items.hm01, 8);
         // TMs
@@ -527,7 +528,6 @@ public class Gen3Constants {
         nonBadItemsRSE = allowedItems.copy();
         nonBadItemsRSE.banSingles(Gen3Items.lightBall, Gen3Items.oranBerry, Gen3Items.soulDew);
         nonBadItemsRSE.banRange(Gen3Items.orangeMail, 12); // mail
-        nonBadItemsRSE.banRange(Gen3Items.figyBerry, 33); // berries
         nonBadItemsRSE.banRange(Gen3Items.luckyPunch, 4); // pokemon specific
         nonBadItemsRSE.banRange(Gen3Items.redScarf, 5); // contest scarves
 
@@ -991,17 +991,17 @@ public class Gen3Constants {
             {Gen3Items.blueShard, 40},
             {Gen3Items.yellowShard, 40},
             {Gen3Items.greenShard, 40},
-            {Gen3Items.unknown52, 0},
-            {Gen3Items.unknown53, 0},
-            {Gen3Items.unknown54, 0},
-            {Gen3Items.unknown55, 0},
-            {Gen3Items.unknown56, 0},
-            {Gen3Items.unknown57, 0},
-            {Gen3Items.unknown58, 0},
-            {Gen3Items.unknown59, 0},
-            {Gen3Items.unknown60, 0},
+            {Gen3Items.seaIncense, 200},
+            {Gen3Items.laxIncense, 200},
+            {Gen3Items.oddIncense, 200},
+            {Gen3Items.rockIncense, 200},
+            {Gen3Items.fullIncense, 200},
+            {Gen3Items.waveIncense, 200},
+            {Gen3Items.roseIncense, 200},
+            {Gen3Items.luckIncense, 200},
+            {Gen3Items.pureIncense, 200},
             {Gen3Items.unknown61, 0},
-            {Gen3Items.unknown62, 0},
+            {Gen3Items.abilityCapsule, 200},
             {Gen3Items.hpUp, 980},
             {Gen3Items.protein, 980},
             {Gen3Items.iron, 980},
@@ -1011,7 +1011,7 @@ public class Gen3Constants {
             {Gen3Items.ppUp, 980},
             {Gen3Items.zinc, 980},
             {Gen3Items.ppMax, 2490},
-            {Gen3Items.unknown72, 0},
+            {Gen3Items.swiftFeather, 980},
             {Gen3Items.guardSpec, 70},
             {Gen3Items.direHit, 65},
             {Gen3Items.xAttack, 50},
@@ -1030,18 +1030,18 @@ public class Gen3Constants {
             {Gen3Items.unknown88, 0},
             {Gen3Items.unknown89, 0},
             {Gen3Items.unknown90, 0},
-            {Gen3Items.unknown91, 0},
-            {Gen3Items.unknown92, 0},
+            {Gen3Items.magmarizer, 300},
+            {Gen3Items.electirizer, 300},
             {Gen3Items.sunStone, 300},
             {Gen3Items.moonStone, 300},
             {Gen3Items.fireStone, 300},
             {Gen3Items.thunderstone, 300},
             {Gen3Items.waterStone, 300},
             {Gen3Items.leafStone, 300},
-            {Gen3Items.unknown99, 0},
-            {Gen3Items.unknown100, 0},
-            {Gen3Items.unknown101, 0},
-            {Gen3Items.unknown102, 0},
+            {Gen3Items.duskStone, 300},
+            {Gen3Items.shinyStone, 300},
+            {Gen3Items.iceStone, 300},
+            {Gen3Items.dubiousDisc, 300},
             {Gen3Items.tinyMushroom, 50},
             {Gen3Items.bigMushroom, 500},
             {Gen3Items.unknown105, 0},
@@ -1165,34 +1165,34 @@ public class Gen3Constants {
             {Gen3Items.metalPowder, 1},
             {Gen3Items.thickClub, 50},
             {Gen3Items.stick, 20},
-            {Gen3Items.unknown226, 0},
-            {Gen3Items.unknown227, 0},
-            {Gen3Items.unknown228, 0},
-            {Gen3Items.unknown229, 0},
-            {Gen3Items.unknown230, 0},
-            {Gen3Items.unknown231, 0},
-            {Gen3Items.unknown232, 0},
-            {Gen3Items.unknown233, 0},
-            {Gen3Items.unknown234, 0},
-            {Gen3Items.unknown235, 0},
-            {Gen3Items.unknown236, 0},
-            {Gen3Items.unknown237, 0},
-            {Gen3Items.unknown238, 0},
-            {Gen3Items.unknown239, 0},
-            {Gen3Items.unknown240, 0},
-            {Gen3Items.unknown241, 0},
-            {Gen3Items.unknown242, 0},
-            {Gen3Items.unknown243, 0},
-            {Gen3Items.unknown244, 0},
-            {Gen3Items.unknown245, 0},
-            {Gen3Items.unknown246, 0},
-            {Gen3Items.unknown247, 0},
-            {Gen3Items.unknown248, 0},
-            {Gen3Items.unknown249, 0},
-            {Gen3Items.unknown250, 0},
-            {Gen3Items.unknown251, 0},
-            {Gen3Items.unknown252, 0},
-            {Gen3Items.unknown253, 0},
+            {Gen3Items.chartiBerry, 50},
+            {Gen3Items.chilanBerry, 50},
+            {Gen3Items.chopleBerry, 50},
+            {Gen3Items.cobaBerry, 50},
+            {Gen3Items.colburBerry, 50},
+            {Gen3Items.habanBerry, 50},
+            {Gen3Items.kasibBerry, 50},
+            {Gen3Items.kebiaBerry, 50},
+            {Gen3Items.occaBerry, 50},
+            {Gen3Items.passhoBerry, 50},
+            {Gen3Items.payapaBerry, 50},
+            {Gen3Items.rindoBerry, 50},
+            {Gen3Items.shucaBerry, 50},
+            {Gen3Items.tangaBerry, 50},
+            {Gen3Items.wacanBerry, 50},
+            {Gen3Items.yacheBerry, 50},
+            {Gen3Items.oldGateau, 50},
+            {Gen3Items.casteliacone, 50},
+            {Gen3Items.pewterCrunchies, 50},
+            {Gen3Items.bigMalasada, 50},
+            {Gen3Items.lumioseGalette, 50},
+            {Gen3Items.shalourSable, 50},
+            {Gen3Items.rageCandyBar, 50},
+            {Gen3Items.healthFeather, 50},
+            {Gen3Items.muscleFeather, 50},
+            {Gen3Items.resistFeather, 50},
+            {Gen3Items.geniusFeather, 50},
+            {Gen3Items.cleverFeather, 50},
             {Gen3Items.redScarf, 10},
             {Gen3Items.blueScarf, 10},
             {Gen3Items.pinkScarf, 10},
